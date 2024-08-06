@@ -1,14 +1,19 @@
 import { useState } from "react"
 import AddCategory from "./components/AddCategory"
+import { GifGrid } from "./components/GifGrid"
 
 export const GifExpertApp = () => {
 
   const [categories, setCategories] = useState([ 'One Punch', 'Dragonball' ])
 
-  const onAddCategory = () => {
+  const onAddCategory = (newCategory) => {
+
+    if(categories.includes(newCategory)) return; // no es muy estricto pero funciona, ejemplo si se agrega el mismo valor pero en minuscula igual lo agrega.
+
+    // console.log(newCategory)
     // setCategories( cat => [...cat, 'Valorant'])
-    // setCategories(['Valorant', ...categories ])
-    setCategories([...categories, 'Valorant'])
+    setCategories([newCategory, ...categories ])
+    // setCategories([...categories, 'Valorant'])
   }
 
   return (
@@ -17,19 +22,20 @@ export const GifExpertApp = () => {
       <h1>GifExpertApp</h1>
 
       {/* input */}
-      <AddCategory />
-
-      <button onClick={onAddCategory}>Agregar</button>
+      <AddCategory 
+        // setCategories={setCategories} 
+        onNewCategory={ value => onAddCategory(value) }
+      />
 
       {/* listado de gifs */}
-      <ol>
-        { categories.map( category => {
-            return <li key={category}>{category}</li>;
-          }) 
-        }
-        {/* <li>ABC</li> */}
-      </ol>
-        {/* gif item */}
+      
+      { 
+        categories.map( category => 
+          (
+            <GifGrid key={category} category={category} />
+          )) 
+      }
+
     </>
   )
 }

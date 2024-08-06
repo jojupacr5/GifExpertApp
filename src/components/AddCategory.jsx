@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-const AddCategory = () => {
+const AddCategory = ({ onNewCategory }) => {
 
-  const [inputValue, setInputValue] = useState('One Punch')
+  const [inputValue, setInputValue] = useState('')
 
   const onInputChange = ({ target }) => {
     // console.log(target.value)
@@ -11,12 +11,19 @@ const AddCategory = () => {
   
   const onSubmit = (event) => {
     // console.log(event)
-    event.preventDefault();
-    console.log(inputValue)
+    event.preventDefault(); // previene que se refresque el navegador al usar el submit
+    // console.log(inputValue)
+
+    if(inputValue.trim().length <= 1) return; // verifica que no se mande menos de 2 caracteres al arreglo
+
+    // setCategories(categories => [inputValue, ...categories])
+    onNewCategory(inputValue.trim()) // envia el input value como parametro a la funcion que viene del componente padre
+    setInputValue('') // limpia el input
+
   }
 
   return (
-    <form onSubmit={ (event) => onSubmit(event) }>
+    <form onSubmit={ onSubmit }>
       <input 
         type="text" 
         placeholder="Buscar gifs"
