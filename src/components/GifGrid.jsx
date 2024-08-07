@@ -1,6 +1,10 @@
 export const GifGrid = ({ category }) => {
 
-  const gifs = [1,2,3,4,5]
+  const getGifs = () => {
+
+    const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}`
+
+  }
 
   return (
     <>
