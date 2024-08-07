@@ -1,19 +1,25 @@
+import { GifItem } from './GifItem';
+import { useFetchGifs } from '../hooks/useFetchGifs';
+
+
 export const GifGrid = ({ category }) => {
 
-  const getGifs = () => {
-
-    const url = `https://api.giphy.com/v1/gifs/random?api_key=${apiKey}`
-
-  }
+  const { images, isLoading } = useFetchGifs(category)
 
   return (
     <>
         <h3>{ category }</h3>
-        {
-            gifs.map(gif =>(
-                <p key={gif}>{ gif }</p>
+
+        <div className='card-grid'>
+          {
+            images.map((image) => (
+              <GifItem 
+                key={image.id} 
+                { ...image }
+              />
             ))
-        }
+          }
+        </div>
     </>
   )
 }
